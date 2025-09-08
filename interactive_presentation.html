@@ -453,7 +453,7 @@
                     <div class="gemini-feature-box text-left">
                          <h3 class="text-2xl font-bold text-amber-400 mb-4 text-center">✨ AI-Powered Future Vision</h3>
                         <div class="text-center">
-                            <p class="text-gray-300 mb-4">Lets brainstorm more innovative features for the next version of our software.</p>
+                            <p class="text-gray-300 mb-4">Let's brainstorm more innovative features for the next version of our software.</p>
                             <button id="generate-future-features" class="gemini-button">Generate Future Features</button>
                         </div>
                         <div id="future-features-output" class="gemini-output mt-4 text-gray-300"></div>
@@ -594,7 +594,7 @@
 
         // --- Gemini API Integration ---
         const apiKey = ""; // API key is handled by the environment
-        const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-pro:generateContent?key=${apiKey}`;
+        const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-05-20:generateContent?key=${apiKey}`;
 
         async function callGeminiAPI(prompt, outputElement, buttonElement) {
             buttonElement.disabled = true;
