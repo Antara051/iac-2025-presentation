@@ -168,7 +168,7 @@
         .spec-container {
             position: relative;
             width: 1000px;
-            height: 500px;
+            height: 500px; /* Increased height for better spacing */
         }
         .spec-center {
             position: absolute;
@@ -197,6 +197,7 @@
             padding: 0.75rem;
             border-radius: 0.5rem;
             width: 280px;
+            border: 2px solid; /* Changed to full border */
         }
         .spec-point ul {
             list-style-type: disc;
@@ -209,12 +210,12 @@
         .spec-point.visible {
             opacity: 1;
         }
-        #spec-1 { top: 0; left: 0; border-left: 4px solid #2DD4BF; }
-        #spec-2 { top: 130px; left: 0; border-left: 4px solid #A78BFA; }
-        #spec-3 { top: 260px; left: 0; border-left: 4px solid #FBBF24; }
-        #spec-4 { top: 0; right: 0; border-left: 4px solid #60A5FA; }
-        #spec-5 { top: 130px; right: 0; border-left: 4px solid #F472B6; }
-        #spec-6 { top: 260px; right: 0; border-left: 4px solid #FB923C; }
+        #spec-1 { top: 20px; left: 0; border-color: #2DD4BF; }
+        #spec-2 { top: 160px; left: 0; border-color: #A78BFA; }
+        #spec-3 { top: 300px; left: 0; border-color: #FBBF24; }
+        #spec-4 { top: 20px; right: 0; border-color: #60A5FA; }
+        #spec-5 { top: 160px; right: 0; border-color: #F472B6; }
+        #spec-6 { top: 300px; right: 0; border-color: #FB923C; }
     </style>
 </head>
 <body>
@@ -247,13 +248,6 @@
                     <h3 class="text-2xl font-semibold mb-4">Explore the VERTECS Bus system Stack</h3>
                     <div class="sketchfab-embed-wrapper">
                         <iframe title="Subsystem stak_EM v1" frameborder="0" allowfullscreen mozallowfullscreen="true" webkitallowfullscreen="true" allow="autoplay; fullscreen; xr-spatial-tracking" xr-spatial-tracking execution-while-out-of-viewport execution-while-not-rendered web-share src="https://sketchfab.com/models/8560a5c3ae4f457089a95aae1bf5111b/embed?autospin=1&autostart=1&ui_theme=dark" class="three-d-model"> </iframe>
-                        <!-- <p style="font-size: 13px; font-weight: normal; margin: 5px; color: #9CA3AF;">
-                            <a href="https://sketchfab.com/3d-models/subsystem-stak-em-v1-8560a5c3ae4f457089a95aae1bf5111b?utm_medium=embed&utm_campaign=share-popup&utm_content=8560a5c3ae4f457089a95aae1bf5111b" target="_blank" rel="nofollow" style="font-weight: bold; color: #D1D5DB;"> Subsystem stak_EM v1 </a>
-                            by
-                            <a href="https://sketchfab.com/kafi2911?utm_medium=embed&utm_campaign=share-popup&utm_content=8560a5c3ae4f457089a95aae1bf5111b" target="_blank" rel="nofollow" style="font-weight: bold; color: #D1D5DB;"> kafi2911 </a>
-                            on
-                            <a href="https://sketchfab.com?utm_medium=embed&utm_campaign=share-popup&utm_content=8560a5c3ae4f457089a95aae1bf5111b" target="_blank" rel="nofollow" style="font-weight: bold; color: #D1D5DB;">Sketchfab</a>
-                        </p> -->
                     </div>
                 </div>
             </div>
@@ -308,15 +302,20 @@
                         </ul>
                     </div>
                     <div class="spec-point" id="spec-4">
-                        <h4>04. System Compatibility & Reliability</h4>
+                        <h4>04. System Compatibility</h4>
                         <ul>
                             <li>Compatible with Windows</li>
                             <li>Integrates with additional software</li>
-                            <li>Operation History Logging</li>
                         </ul>
                     </div>
                      <div class="spec-point" id="spec-5">
-                        <h4>05. Integration & Expandability</h4>
+                        <h4>05. Reliability</h4>
+                        <ul>
+                           <li>Operation History Logging</li>
+                        </ul>
+                    </div>
+                    <div class="spec-point" id="spec-6">
+                        <h4>06. Integration & Expandability</h4>
                         <ul>
                            <li>Modular architecture for future expansions</li>
                         </ul>
