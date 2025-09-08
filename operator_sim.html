@@ -4,38 +4,129 @@
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width,initial-scale=1" />
 <title>VERTECS Operator Micro-Simulation</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
 <style>
   :root {
-    --bg:#0c1020; --card:#141a33; --muted:#6c7a93; --ok:#11c26a; --warn:#ffb020; --text:#e9eefc; --accent:#5aa6ff;
+    --bg: #111827;
+    --card: #1F2937;
+    --muted: #9CA3AF;
+    --ok: #34D399;
+    --warn: #FBBF24;
+    --text: #F3F4F6;
+    --accent: #F59E0B;
+    --button-text: #111827;
+    --border-color: #374151;
   }
-  html,body{height:100%;margin:0;background:radial-gradient(1200px 600px at 30% -10%, #1a2144 0%, #0c1020 60%);}
-  body{font-family:system-ui,-apple-system,Segoe UI,Roboto,Inter,Arial;color:var(--text);display:grid;place-items:center;padding:16px}
-  .wrap{width:min(980px,95vw)}
-  h1{font-size:clamp(22px,3.6vw,34px);margin:0 0 4px}
-  .sub{color:var(--muted);margin-bottom:16px}
-  .pipeline{display:grid;grid-template-columns:repeat(5,1fr);gap:14px;margin-top:12px}
-  .node{background:var(--card);border-radius:16px;padding:16px;box-shadow:0 6px 20px rgba(0,0,0,.25);position:relative;min-height:110px;display:grid;align-content:center;justify-items:center}
-  .node .name{font-weight:600;margin-bottom:8px}
-  .node .desc{font-size:13px;color:#b7c2dd;text-align:center}
-  .node::after{content:"";position:absolute;top:50%;right:-7px;width:14px;height:2px;background:#32406a;transform:translateY(-50%)}
-  .node:last-child::after{display:none}
-  .node.ok{outline:2px solid rgba(17,194,106,.35);box-shadow:0 0 0 6px rgba(17,194,106,.12)}
-  .led{width:10px;height:10px;border-radius:50%;background:#384767;margin-top:6px;box-shadow:0 0 0 0 transparent;transition:all .25s ease}
-  .ok .led{background:var(--ok);box-shadow:0 0 12px 2px rgba(17,194,106,.45)}
-  .warn{color:var(--warn);font-weight:600}
-  .controls{display:flex;gap:12px;margin-top:18px;flex-wrap:wrap}
-  button{background:var(--accent);color:#041427;border:0;padding:12px 16px;border-radius:12px;font-weight:700;cursor:pointer}
-  button.secondary{background:#223055;color:#cfe1ff}
-  .toast{position:fixed;right:16px;bottom:16px;background:#12213f;border:1px solid #223055;color:#cfe1ff;padding:10px 12px;border-radius:10px;opacity:0;transform:translateY(8px);transition:all .28s ease}
-  .toast.show{opacity:1;transform:none}
-  .badges{display:flex;gap:12px;margin-top:14px;flex-wrap:wrap}
-  .badge{background:#10172b;border:1px solid #243050;color:#b9c7e6;border-radius:999px;padding:8px 12px;font-size:13px}
-  @media(max-width:820px){.pipeline{grid-template-columns:1fr 1fr}}
+  html, body { 
+    height: 100%; 
+    margin: 0; 
+    background-color: var(--bg);
+  }
+  body { 
+    font-family: 'Inter', system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif; 
+    color: var(--text); 
+    display: grid; 
+    place-items: center; 
+    padding: 16px;
+  }
+  .wrap { width: min(980px, 95vw); }
+  h1 { 
+    font-size: clamp(22px, 3.6vw, 34px); 
+    margin: 0 0 4px; 
+    color: var(--warn); /* This line has been added */
+  }
+  .sub { color: var(--muted); margin-bottom: 24px; }
+  .pipeline { display: grid; grid-template-columns: repeat(5, 1fr); gap: 14px; margin-top: 12px; }
+  .node { 
+    background: var(--card); 
+    border-radius: 16px; 
+    padding: 16px; 
+    box-shadow: 0 6px 20px rgba(0,0,0,.25); 
+    position: relative; 
+    min-height: 110px; 
+    display: grid; 
+    align-content: center; 
+    justify-items: center; 
+    border: 1px solid var(--border-color);
+  }
+  .node .name { font-weight: 600; margin-bottom: 8px; }
+  .node .desc { font-size: 13px; color: var(--muted); text-align: center; }
+  .node::after { 
+    content: ""; 
+    position: absolute; 
+    top: 50%; 
+    right: -7px; 
+    width: 14px; 
+    height: 2px; 
+    background: var(--border-color); 
+    transform: translateY(-50%); 
+  }
+  .node:last-child::after { display: none; }
+  .node.ok { 
+    outline: 2px solid rgba(52, 211, 153, .35); 
+    box-shadow: 0 0 0 6px rgba(52, 211, 153, .12); 
+  }
+  .led { 
+    width: 10px; 
+    height: 10px; 
+    border-radius: 50%; 
+    background: #384767; 
+    margin-top: 6px; 
+    box-shadow: 0 0 0 0 transparent; 
+    transition: all .25s ease; 
+  }
+  .ok .led { background: var(--ok); box-shadow: 0 0 12px 2px rgba(52, 211, 153, .45); }
+  .warn { color: var(--warn); font-weight: 600; }
+  .controls { display: flex; gap: 12px; margin-top: 24px; flex-wrap: wrap; }
+  button { 
+    background: var(--accent); 
+    color: var(--button-text); 
+    border: 0; 
+    padding: 12px 20px; 
+    border-radius: 12px; 
+    font-weight: 700; 
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+  }
+  button:hover { background: #FBBF24; }
+  button.secondary { 
+    background: #374151; 
+    color: var(--text); 
+  }
+  button.secondary:hover { background: #4B5563; }
+  .toast { 
+    position: fixed; 
+    right: 16px; 
+    bottom: 16px; 
+    background: var(--card); 
+    border: 1px solid var(--border-color); 
+    color: var(--text); 
+    padding: 10px 14px; 
+    border-radius: 10px; 
+    opacity: 0; 
+    transform: translateY(8px); 
+    transition: all .28s ease;
+    box-shadow: 0 4px 12px rgba(0,0,0,.3);
+  }
+  .toast.show { opacity: 1; transform: none; }
+  .badges { display: flex; gap: 12px; margin-top: 24px; flex-wrap: wrap; }
+  .badge { 
+    background: rgba(245, 158, 11, 0.1); 
+    border: 1px solid rgba(245, 158, 11, 0.3); 
+    color: var(--warn); 
+    border-radius: 999px; 
+    padding: 8px 12px; 
+    font-size: 13px;
+    font-weight: 500;
+  }
+  @media(max-width:820px) { .pipeline { grid-template-columns: 1fr 1fr; } }
 </style>
 </head>
 <body>
   <div class="wrap">
-    <h1>Command → ACK → Telemetry (VERTECS Ground Station)</h1>
+    <h1>Command → ACK → Telemetry Simulation</h1>
     <div class="sub">Click <b>Send Command</b>. Watch each stage light up; the ACK toast confirms safe, traceable commanding.</div>
 
     <div class="pipeline" id="pipe">
@@ -47,10 +138,10 @@
     </div>
 
     <div class="badges">
-      <span class="badge">ACK &gt; 99%</span>
-      <span class="badge">Latency &lt; 1s</span>
-      <span class="badge">Pacing ±1s</span>
-      <span class="badge">4-tier logging</span>
+      <span class="badge">ACK Success: >99%</span>
+      <span class="badge">Telemetry Latency: <1s</span>
+      <span class="badge">Command Pacing: ±1s</span>
+      <span class="badge">4-Tier Logging Active</span>
     </div>
 
     <div class="controls">
@@ -59,27 +150,42 @@
     </div>
   </div>
 
-  <div class="toast" id="toast">ACK received — command executed</div>
+  <div class="toast" id="toast">✅ ACK received — command executed</div>
 
 <script>
-  const nodes = ["gen","pace","uplink","ack","hk"];
+  const nodes = ["gen", "pace", "uplink", "ack", "hk"];
   const $ = sel => document.querySelector(sel);
   const byKey = k => document.querySelector(`.node[data-key="${k}"]`);
-  function clear() { nodes.forEach(k=>byKey(k).classList.remove('ok')); $("#toast").classList.remove('show'); }
-  function ackToast(){ const t=$("#toast"); t.classList.add('show'); setTimeout(()=>t.classList.remove('show'), 2200); }
-  function play(){
-    clear();
-    const steps = [
-      ()=>byKey("gen").classList.add('ok'),
-      ()=>byKey("pace").classList.add('ok'),
-      ()=>byKey("uplink").classList.add('ok'),
-      ()=>{byKey("ack").classList.add('ok'); ackToast();},
-      ()=>byKey("hk").classList.add('ok'),
-    ];
-    steps.forEach((fn,i)=>setTimeout(fn, 600*i));
+  
+  function clear() { 
+    nodes.forEach(k => byKey(k).classList.remove('ok')); 
+    $("#toast").classList.remove('show'); 
+    $("#send").disabled = false;
   }
+  
+  function ackToast() { 
+    const t = $("#toast"); 
+    t.classList.add('show'); 
+    setTimeout(() => t.classList.remove('show'), 2200); 
+  }
+
+  function play() {
+    clear();
+    $("#send").disabled = true;
+    const steps = [
+      () => byKey("gen").classList.add('ok'),
+      () => byKey("pace").classList.add('ok'),
+      () => byKey("uplink").classList.add('ok'),
+      () => { byKey("ack").classList.add('ok'); ackToast(); },
+      () => byKey("hk").classList.add('ok'),
+      () => $("#send").disabled = false,
+    ];
+    steps.forEach((fn, i) => setTimeout(fn, 600 * i));
+  }
+  
   $("#send").addEventListener('click', play);
   $("#reset").addEventListener('click', clear);
 </script>
 </body>
 </html>
+
