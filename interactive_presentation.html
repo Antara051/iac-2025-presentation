@@ -1,0 +1,347 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>VERTECS GS Software Presentation</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+    <style>
+        /* This file is designed to be embedded in iFrames.
+           Each <section> acts as an independent "slide".
+           A script at the bottom checks the URL hash (e.g., #challenge)
+           and only displays the corresponding section. */
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #111827;
+            color: #F3F4F6;
+            overflow: hidden; /* Hide scrollbars for iFrame view */
+        }
+        .section {
+            min-height: 100vh;
+            width: 100vw;
+            display: none; /* All sections are hidden by default */
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 4rem 2rem;
+            position: absolute;
+            top: 0;
+            left: 0;
+        }
+        .section.active {
+            display: flex; /* Only the active section is shown */
+        }
+        .slide-content {
+            max-width: 1200px;
+            width: 100%;
+        }
+        .interactive-diagram .part {
+            transition: all 0.3s ease;
+            cursor: pointer;
+            border: 2px solid transparent;
+        }
+        .interactive-diagram .part:hover {
+            transform: scale(1.05);
+            border-color: #F59E0B;
+        }
+        .info-box {
+            display: none;
+            opacity: 0;
+            transition: opacity 0.5s ease;
+        }
+        .info-box.active {
+            display: block;
+            opacity: 1;
+        }
+        .fade-in {
+            animation: fadeIn 1s ease-in-out forwards;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+    </style>
+</head>
+<body>
+
+    <main>
+        <!-- Slide 1: Title -->
+        <section id="title" class="section bg-cover bg-center" style="background-image: linear-gradient(rgba(17, 24, 39, 0.8), rgba(17, 24, 39, 0.8)), url('https://placehold.co/1920x1080/1a202c/374151?text=Satellite+Orbit');">
+            <div class="text-center fade-in">
+                <img src="https://placehold.co/150x150/ffffff/111827?text=VERTECS+Logo" alt="VERTECS Logo" class="mx-auto mb-6 rounded-full">
+                <h1 class="text-4xl md:text-6xl font-bold text-white tracking-tight">Development and Validation of VERTECS Satellite Ground Station Software</h1>
+                <p class="mt-4 text-xl md:text-2xl text-amber-400">Real-Time Telemetry and Mission Command Execution</p>
+                <p class="mt-8 text-lg text-gray-300">Raihana Shams Islam Antara | Kyushu Institute of Technology</p>
+                <p class="mt-2 text-md text-gray-400">76th International Astronautical Congress (IAC 2025)</p>
+            </div>
+        </section>
+
+        <!-- Slide 2: The Challenge -->
+        <section id="challenge" class="section">
+            <div class="slide-content grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
+                <div class="fade-in">
+                    <h2 class="text-4xl font-bold text-amber-400 mb-4">The Challenge: A Reliable Link</h2>
+                    <p class="text-lg text-gray-300 mb-4">Small satellites like VERTECS have huge scientific ambitions. But without a robust, intuitive, and reliable link to the ground, they're flying blind.</p>
+                    <ul class="space-y-3 text-lg">
+                        <li class="flex items-start"><span class="text-amber-400 mr-3 font-bold">✖</span> Commercial software is often too expensive and inflexible for academic missions.</li>
+                        <li class="flex items-start"><span class="text-amber-400 mr-3 font-bold">✖</span> Basic scripts lack critical features like real-time visualization and structured logging.</li>
+                        <li class="flex items-start"><span class="text-amber-400 mr-3 font-bold">✔</span> <strong class="text-white">Our Goal:</strong> Create a custom, operator-friendly Ground Station Software to empower the VERTECS mission.</li>
+                    </ul>
+                </div>
+                <div class="fade-in">
+                    <img src="https://placehold.co/600x400/374151/ffffff?text=VERTECS+Satellite+Model" alt="VERTECS Satellite" class="rounded-lg shadow-2xl">
+                    <p class="text-center mt-2 text-gray-400 italic">The VERTECS 6U Nanosatellite for observing Extragalactic Background Light.</p>
+                </div>
+            </div>
+        </section>
+        
+        <!-- Slide 3: System Architecture -->
+        <section id="architecture" class="section">
+            <div class="slide-content text-center">
+                 <h2 class="text-4xl font-bold text-amber-400 mb-2">Our Blueprint: A Layered Architecture</h2>
+                 <p class="text-lg text-gray-300 mb-8">We designed the software with 5 independent layers for modularity and reliability. Click each layer to learn more.</p>
+                 <div class="grid grid-cols-5 gap-4 interactive-diagram" id="architecture-diagram">
+                     <div class="part bg-gray-800 p-6 rounded-lg" data-target="info-connection">
+                         <h3 class="font-bold text-lg">Connection Layer</h3>
+                         <p class="text-sm text-gray-400">The Bridge</p>
+                     </div>
+                     <div class="part bg-gray-800 p-6 rounded-lg" data-target="info-uplink">
+                         <h3 class="font-bold text-lg">Uplink Layer</h3>
+                         <p class="text-sm text-gray-400">Sending Commands</p>
+                     </div>
+                     <div class="part bg-gray-800 p-6 rounded-lg" data-target="info-downlink">
+                         <h3 class="font-bold text-lg">Downlink Layer</h3>
+                         <p class="text-sm text-gray-400">Processing Telemetry</p>
+                     </div>
+                     <div class="part bg-gray-800 p-6 rounded-lg" data-target="info-visualization">
+                         <h3 class="font-bold text-lg">Visualization Layer</h3>
+                         <p class="text-sm text-gray-400">Operator's View</p>
+                     </div>
+                     <div class="part bg-gray-800 p-6 rounded-lg" data-target="info-persistence">
+                         <h3 class="font-bold text-lg">Persistence Layer</h3>
+                         <p class="text-sm text-gray-400">Data Logging</p>
+                     </div>
+                 </div>
+                 <div class="mt-8 text-left bg-gray-800 p-6 rounded-lg min-h-[150px]">
+                     <div id="info-default" class="info-box active">
+                         <h4 class="font-bold text-xl text-amber-400">How it's Built</h4>
+                         <p class="text-gray-300 mt-2">The development followed a hybrid <strong class="text-white">Agile-V Model</strong>, combining the flexibility of Agile with the rigorous verification of the traditional V-Model—perfect for academic nanosatellite projects.</p>
+                     </div>
+                     <div id="info-connection" class="info-box">
+                         <h4 class="font-bold text-xl text-amber-400">Connection Layer</h4>
+                         <p class="text-gray-300 mt-2">Manages the raw data link between the satellite and the ground station, ensuring reliable communication over the S-band connection.</p>
+                     </div>
+                     <div id="info-uplink" class="info-box">
+                         <h4 class="font-bold text-xl text-amber-400">Uplink Layer</h4>
+                         <p class="text-gray-300 mt-2">Formats operator commands into mission-compliant packets, adding timestamps and redundancy checks to ensure every command is traceable and verifiable.</p>
+                     </div>
+                    <div id="info-downlink" class="info-box">
+                         <h4 class="font-bold text-xl text-amber-400">Downlink Layer</h4>
+                         <p class="text-gray-300 mt-2">Extracts, filters, and reconstructs housekeeping data from the raw telemetry stream, preparing it for real-time analysis.</p>
+                     </div>
+                     <div id="info-visualization" class="info-box">
+                         <h4 class="font-bold text-xl text-amber-400">Visualization Layer</h4>
+                         <p class="text-gray-300 mt-2">Transforms technical parameters into intuitive visuals: LED indicators for system health, summary panels, and time-series plots for trend analysis.</p>
+                     </div>
+                     <div id="info-persistence" class="info-box">
+                         <h4 class="font-bold text-xl text-amber-400">Persistence Layer</h4>
+                         <p class="text-gray-300 mt-2">Records every received packet, command, and decoded parameter into a four-tier logging system for post-mission analysis. Nothing is lost.</p>
+                     </div>
+                 </div>
+            </div>
+        </section>
+
+        <!-- Slide 4: Live Demo Simulation -->
+        <section id="demo" class="section">
+            <div class="slide-content text-center">
+                <h2 class="text-4xl font-bold text-amber-400 mb-8">Live Demo Simulation</h2>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                    <!-- Telemetry Flow -->
+                    <div class="bg-gray-800 p-6 rounded-lg">
+                        <h3 class="text-2xl font-bold mb-4 text-white">Telemetry Flow: From Raw Data to Insight</h3>
+                        <div class="space-y-4 font-mono text-sm text-left">
+                            <div id="demo-raw" class="bg-gray-900 p-3 rounded opacity-50 transition-opacity duration-500">
+                                <p class="text-gray-400">> Raw Hex Stream Received...</p>
+                                <p class="text-red-400">7E A0 B1 C2 00 FF 3A 9B ...</p>
+                            </div>
+                            <div class="text-center text-amber-400 text-2xl">↓</div>
+                             <div id="demo-decoded" class="bg-gray-900 p-3 rounded opacity-50 transition-opacity duration-500">
+                                <p class="text-gray-400">> Packet Decoded...</p>
+                                <p><span class="text-cyan-400">Voltage:</span> 5.1V</p>
+                                <p><span class="text-cyan-400">Current:</span> 0.8A</p>
+                                <p><span class="text-cyan-400">Temp:</span> 23.5°C</p>
+                            </div>
+                            <div class="text-center text-amber-400 text-2xl">↓</div>
+                             <div id="demo-gui" class="bg-gray-900 p-3 rounded opacity-50 transition-opacity duration-500">
+                                <p class="text-gray-400">> GUI Updated...</p>
+                                <p class="text-green-400">Plots & Indicators now show live data.</p>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Command Flow -->
+                    <div class="bg-gray-800 p-6 rounded-lg">
+                        <h3 class="text-2xl font-bold mb-4 text-white">Command Flow: Safe & Reliable Control</h3>
+                         <div class="space-y-4 font-mono text-sm text-left">
+                            <div id="demo-cmd-send" class="bg-gray-900 p-3 rounded opacity-50 transition-opacity duration-500">
+                                <p class="text-gray-400">> Operator sends command...</p>
+                                <p class="text-yellow-400">"ACTIVATE_PAYLOAD"</p>
+                            </div>
+                            <div class="text-center text-amber-400 text-2xl">↓</div>
+                             <div id="demo-cmd-uplink" class="bg-gray-900 p-3 rounded opacity-50 transition-opacity duration-500">
+                                <p class="text-gray-400">> Transmitted to satellite...</p>
+                                <p>Uplink successful.</p>
+                            </div>
+                            <div class="text-center text-amber-400 text-2xl">↓</div>
+                             <div id="demo-cmd-ack" class="bg-gray-900 p-3 rounded opacity-50 transition-opacity duration-500">
+                                <p class="text-gray-400">> Acknowledgement received...</p>
+                                <p class="text-green-400">Command "ACTIVATE_PAYLOAD" confirmed.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                 <button id="run-demo-btn" class="mt-8 bg-amber-500 text-gray-900 font-bold py-3 px-6 rounded-lg hover:bg-amber-400 transition-colors">Run Animation</button>
+            </div>
+        </section>
+
+
+        <!-- Slide 5: The Proof -->
+        <section id="results" class="section">
+            <div class="slide-content text-center">
+                <h2 class="text-4xl font-bold text-amber-400 mb-8">The Proof: Mission Ready Performance</h2>
+                <p class="text-lg text-gray-300 mb-12 max-w-4xl mx-auto">Rigorous testing with Engineering (EM), Flight (FM), and Long Duration (LDT) models confirmed the software's reliability under operational conditions.</p>
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                    <div class="bg-gray-800 p-8 rounded-lg shadow-xl">
+                        <p class="text-6xl font-bold text-green-400">&gt;99%</p>
+                        <h3 class="mt-4 text-xl font-semibold text-white">Command Acknowledgement</h3>
+                        <p class="mt-2 text-gray-400">Commands were consistently received and confirmed by the satellite across all tests.</p>
+                    </div>
+                    <div class="bg-gray-800 p-8 rounded-lg shadow-xl">
+                        <p class="text-6xl font-bold text-green-400">&lt;1 sec</p>
+                        <h3 class="mt-4 text-xl font-semibold text-white">Telemetry Latency</h3>
+                        <p class="mt-2 text-gray-400">Operators see data almost instantly, allowing for rapid, informed decision-making.</p>
+                    </div>
+                    <div class="bg-gray-800 p-8 rounded-lg shadow-xl">
+                        <p class="text-6xl font-bold text-green-400">Zero</p>
+                        <h3 class="mt-4 text-xl font-semibold text-white">Crashes or Data Gaps</h3>
+                        <p class="mt-2 text-gray-400">The system demonstrated complete stability with no crashes or data loss during multi-hour long duration tests.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <!-- Slide 6: Conclusion -->
+        <section id="conclusion" class="section">
+            <div class="slide-content grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
+                 <div class="fade-in">
+                    <h2 class="text-4xl font-bold text-amber-400 mb-4">Conclusion & Future Vision</h2>
+                    <p class="text-xl text-gray-300 mb-6">The VERTECS GS Software is a validated, mission-ready tool that provides a reliable and intuitive solution for CubeSat operations.</p>
+                     <div class="space-y-4">
+                        <div class="bg-gray-800 p-4 rounded-lg">
+                            <h3 class="font-bold text-lg text-white">Next Steps: Enhancing Capabilities</h3>
+                            <ul class="list-disc list-inside mt-2 text-gray-300">
+                                <li>Automated anomaly detection from telemetry trends.</li>
+                                <li>Cloud-based storage for distributed data access.</li>
+                                <li>Multi-satellite operation support.</li>
+                            </ul>
+                        </div>
+                     </div>
+                </div>
+                <div class="text-center fade-in">
+                    <h3 class="text-2xl font-bold mb-4">Thank You</h3>
+                    <p class="text-lg text-gray-400 mb-6">Acknowledgements to the LaSEINE lab, VERTECS mission partners, and collaborators.</p>
+                    <p class="text-lg font-semibold text-amber-400">Questions?</p>
+                </div>
+            </div>
+        </section>
+    </main>
+
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+        // --- iFrame Section Controller ---
+        function showActiveSection() {
+            // Get the hash from the URL (e.g., "#challenge")
+            const hash = window.location.hash.substring(1);
+            const sections = document.querySelectorAll('.section');
+            let activeSection = null;
+
+            if (hash) {
+                activeSection = document.getElementById(hash);
+            }
+
+            // If no valid hash, default to the first section
+            if (!activeSection) {
+                activeSection = sections[0];
+            }
+            
+            // Hide all sections, then show the active one
+            sections.forEach(s => s.classList.remove('active'));
+            if(activeSection) {
+                activeSection.classList.add('active');
+            }
+        }
+
+        // Show the correct section on initial load
+        showActiveSection();
+
+        // Also handle hash changes if the user navigates within the same page
+        window.addEventListener('hashchange', showActiveSection);
+
+
+        // --- Interactive Elements (same as before) ---
+
+        // Interactive Architecture Diagram
+        const diagramParts = document.querySelectorAll('.interactive-diagram .part');
+        const infoBoxes = document.querySelectorAll('.info-box');
+        
+        diagramParts.forEach(part => {
+            part.addEventListener('click', () => {
+                const targetId = part.dataset.target;
+                infoBoxes.forEach(box => {
+                    if (box.id === targetId) {
+                        box.classList.add('active');
+                    } else {
+                        box.classList.remove('active');
+                    }
+                });
+            });
+        });
+
+        // Demo Animation
+        const runDemoBtn = document.getElementById('run-demo-btn');
+        const demoStages = [
+            document.getElementById('demo-raw'), document.getElementById('demo-decoded'), document.getElementById('demo-gui'),
+            document.getElementById('demo-cmd-send'), document.getElementById('demo-cmd-uplink'), document.getElementById('demo-cmd-ack')
+        ];
+
+        if(runDemoBtn) {
+            runDemoBtn.addEventListener('click', () => {
+                runDemoBtn.disabled = true;
+                runDemoBtn.textContent = 'Running...';
+                demoStages.forEach(stage => stage && stage.classList.remove('opacity-100'));
+                demoStages.forEach(stage => stage && stage.classList.add('opacity-50'));
+
+                const animateStage = (index) => {
+                    if (index >= demoStages.length) {
+                        runDemoBtn.disabled = false;
+                        runDemoBtn.textContent = 'Run Animation Again';
+                        return;
+                    }
+                    const stage = demoStages[index];
+                    if (stage) {
+                        stage.classList.remove('opacity-50');
+                        stage.classList.add('opacity-100');
+                    }
+                    setTimeout(() => animateStage(index + 1), 700);
+                };
+                
+                animateStage(0);
+            });
+        }
+    });
+</script>
+
+</body>
+</html>
