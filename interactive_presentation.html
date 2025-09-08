@@ -66,25 +66,6 @@
             border-radius: 0.5rem;
             border: 1px solid #374151;
         }
-        /* Styles for Gemini Features */
-        .gemini-feature-box {
-            background-color: #1F2937;
-            border: 1px solid #374151;
-            border-radius: 0.75rem;
-            padding: 1.5rem;
-            margin-top: 2rem;
-            min-height: 150px;
-        }
-        .gemini-output p {
-            margin-bottom: 0.75rem;
-        }
-        .gemini-output ul {
-            list-style-position: inside;
-            padding-left: 0.5rem;
-        }
-        .gemini-output li {
-            margin-bottom: 0.5rem;
-        }
         .gemini-button {
             background-color: #f59e0b;
             color: #111827;
@@ -101,19 +82,6 @@
         .gemini-button:disabled {
             background-color: #4b5563;
             cursor: not-allowed;
-        }
-        .loader {
-            border: 4px solid #4b5563;
-            border-top: 4px solid #f59e0b;
-            border-radius: 50%;
-            width: 24px;
-            height: 24px;
-            animation: spin 1s linear infinite;
-            margin: 1rem auto;
-        }
-        @keyframes spin {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
         }
         /* Styles for Agile-V Animation */
         .agile-v-container {
@@ -168,7 +136,7 @@
         .spec-container {
             position: relative;
             width: 1000px;
-            height: 500px; /* Increased height for better spacing */
+            height: 550px; /* Increased height for better spacing */
         }
         .spec-center {
             position: absolute;
@@ -211,11 +179,11 @@
             opacity: 1;
         }
         #spec-1 { top: 20px; left: 0; border-color: #2DD4BF; }
-        #spec-2 { top: 160px; left: 0; border-color: #A78BFA; }
-        #spec-3 { top: 300px; left: 0; border-color: #FBBF24; }
+        #spec-2 { top: 180px; left: 0; border-color: #A78BFA; }
+        #spec-3 { top: 340px; left: 0; border-color: #FBBF24; }
         #spec-4 { top: 20px; right: 0; border-color: #60A5FA; }
-        #spec-5 { top: 160px; right: 0; border-color: #F472B6; }
-        #spec-6 { top: 300px; right: 0; border-color: #FB923C; }
+        #spec-5 { top: 180px; right: 0; border-color: #F472B6; }
+        #spec-6 { top: 340px; right: 0; border-color: #FB923C; }
     </style>
 </head>
 <body>
@@ -419,15 +387,6 @@
                     <div class="bg-gray-800 p-8 rounded-lg shadow-xl"><p class="text-6xl font-bold text-green-400">&lt;1 sec</p><h3 class="mt-4 text-xl font-semibold text-white">Telemetry Latency</h3><p class="mt-2 text-gray-400">Operators see data almost instantly, allowing for rapid, informed decision-making.</p></div>
                     <div class="bg-gray-800 p-8 rounded-lg shadow-xl"><p class="text-6xl font-bold text-green-400">Zero</p><h3 class="mt-4 text-xl font-semibold text-white">Crashes or Data Gaps</h3><p class="mt-2 text-gray-400">The system demonstrated complete stability with no crashes or data loss during multi-hour long duration tests.</p></div>
                 </div>
-                <!-- Gemini Anomaly Report Feature -->
-                <div class="gemini-feature-box text-left max-w-3xl mx-auto">
-                    <h3 class="text-2xl font-bold text-amber-400 mb-4 text-center">✨ AI-Assisted Operations</h3>
-                    <div class="text-center">
-                        <p class="text-gray-300 mb-4">Click to simulate a satellite anomaly and generate a professional operator report.</p>
-                        <button id="generate-anomaly-report" class="gemini-button">Simulate & Report Anomaly</button>
-                    </div>
-                    <div id="anomaly-report-output" class="gemini-output mt-4 text-gray-300"></div>
-                </div>
             </div>
         </section>
         
@@ -449,15 +408,7 @@
                      </div>
                 </div>
                 <div class="fade-in text-center">
-                     <!-- Gemini Future Features Feature -->
-                    <div class="gemini-feature-box text-left">
-                         <h3 class="text-2xl font-bold text-amber-400 mb-4 text-center">✨ AI-Powered Future Vision</h3>
-                        <div class="text-center">
-                            <p class="text-gray-300 mb-4">Let's brainstorm more innovative features for the next version of our software.</p>
-                            <button id="generate-future-features" class="gemini-button">Generate Future Features</button>
-                        </div>
-                        <div id="future-features-output" class="gemini-output mt-4 text-gray-300"></div>
-                    </div>
+                     <img src="https://antara051.github.io/iac-2025-presentation/Images/GS_software.JPG" alt="Ground Station Control Room" class="rounded-lg shadow-2xl">
                 </div>
             </div>
         </section>
@@ -589,88 +540,6 @@
                         runDemoBtn.textContent = 'Run Animation Again';
                     }
                 }, 700);
-            });
-        }
-
-        // --- Gemini API Integration ---
-        const apiKey = ""; // API key is handled by the environment
-        const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-05-20:generateContent?key=${apiKey}`;
-
-        async function callGeminiAPI(prompt, outputElement, buttonElement) {
-            buttonElement.disabled = true;
-            outputElement.innerHTML = '<div class="loader"></div>';
-
-            const payload = {
-                contents: [{ parts: [{ text: prompt }] }],
-            };
-            
-            try {
-                 const response = await fetch(apiUrl, {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify(payload)
-                });
-
-                if (!response.ok) {
-                    const errorBody = await response.json().catch(() => ({ error: { message: "An unknown API error occurred." } }));
-                    throw new Error(errorBody?.error?.message || `API error: ${response.status}`);
-                }
-
-                const result = await response.json();
-                const text = result.candidates?.[0]?.content?.parts?.[0]?.text;
-                
-                if (text) {
-                    let html = text
-                        .replace(/</g, "&lt;")
-                        .replace(/>/g, "&gt;")
-                        .replace(/\n/g, '<br>')
-                        .replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')
-                        .replace(/\* (.*?)(<br>|$)/g, '<li>$1</li>');
-                    
-                    if(html.includes('<li>')) {
-                       html = `<ul>${html.replaceAll('</li><br>', '</li>')}</ul>`;
-                    }
-                    outputElement.innerHTML = html;
-
-                } else {
-                    outputElement.textContent = 'Sorry, the model did not return a response.';
-                }
-
-            } catch (error) {
-                console.error("Gemini API call failed:", error);
-                outputElement.textContent = `An error occurred. Please try again later. Details: ${error.message}`;
-            } finally {
-                buttonElement.disabled = false;
-            }
-        }
-
-        // Feature 1: Anomaly Report
-        const anomalyBtn = document.getElementById('generate-anomaly-report');
-        const anomalyOutput = document.getElementById('anomaly-report-output');
-        if (anomalyBtn) {
-            anomalyBtn.addEventListener('click', () => {
-                const prompt = `
-                    You are a satellite ground station operator for the VERTECS mission.
-                    An automated alert flags a potential anomaly.
-                    Telemetry shows a sudden, unexpected temperature spike on a primary solar panel from 23.5°C to 51.2°C.
-                    Simultaneously, the bus voltage dropped by 0.15V.
-                    Generate a concise, professional, 3-sentence anomaly report log entry for this event.
-                `;
-                callGeminiAPI(prompt, anomalyOutput, anomalyBtn);
-            });
-        }
-
-        // Feature 2: Future Features
-        const futureBtn = document.getElementById('generate-future-features');
-        const futureOutput = document.getElementById('future-features-output');
-        if (futureBtn) {
-            futureBtn.addEventListener('click', () => {
-                const prompt = `
-                    Based on the description of the VERTECS Ground Station Software (a tool for command uplink, telemetry decoding, and visualization for a 6U CubeSat), suggest three innovative new features that could be added in the future.
-                    The software already has a layered architecture, a PyQt GUI, and robust logging.
-                    Present the suggestions as a bulleted list with a brief explanation for each. Use markdown for bolding and bullet points.
-                `;
-                callGeminiAPI(prompt, futureOutput, futureBtn);
             });
         }
     });
