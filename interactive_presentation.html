@@ -139,10 +139,15 @@
             transform: scale(0.9);
             transition: all 0.5s ease-out;
             border-left: 4px solid;
+            cursor: pointer;
         }
         .av-point.visible {
             opacity: 1;
             transform: scale(1);
+        }
+        .av-point.selected {
+            border-color: #f59e0b !important;
+            box-shadow: 0 0 0 2px rgba(245, 158, 11, 0.5);
         }
         .agile-side .av-point { border-color: #34D399; }
         .v-model-side .av-point { border-color: #60A5FA; }
@@ -267,7 +272,7 @@
                         </div>
                     </div>
                     <div class="av-center">
-                         <img src="https://placehold.co/150x150/111827/F59E0B?text=AGILE-V" alt="Agile-V" class="rounded-full">
+                         <img src="https://antara051.github.io/iac-2025-presentation/Images/Agile_V_model.jpg" alt="Agile-V" class="rounded-full">
                     </div>
                     <div class="v-model-side">
                         <div class="av-point" data-point="4">
@@ -286,7 +291,7 @@
                 </div>
                 
                 <div class="av-info-box" id="agile-v-info-box">
-                    <p class="text-gray-300">Click "Start Animation" to see how our hybrid process works.</p>
+                    <p class="text-gray-300">Click any point to learn more, or start the animation.</p>
                 </div>
                 
                 <button id="run-agile-v-animation" class="gemini-button mt-6">Start Animation</button>
@@ -404,7 +409,10 @@
             agileVButton.addEventListener('click', () => {
                 agileVButton.disabled = true;
                 agileVButton.textContent = 'Animating...';
-                agileVPoints.forEach(p => p.classList.remove('visible'));
+                agileVPoints.forEach(p => {
+                    p.classList.remove('visible');
+                    p.classList.remove('selected');
+                });
 
                 let i = 0;
                 const pointsOrder = [1, 4, 2, 5, 3, 6]; // Alternate between Agile and V-Model
@@ -412,16 +420,27 @@
                     if (i < pointsOrder.length) {
                         const point = document.querySelector(`.av-point[data-point="${pointsOrder[i]}"]`);
                         point.classList.add('visible');
+                        point.classList.add('selected');
                         agileVInfoBox.innerHTML = agileVInfoTexts[pointsOrder[i]];
                         i++;
                     } else {
                         clearInterval(interval);
                         agileVButton.disabled = false;
                         agileVButton.textContent = 'Replay Animation';
+                        agileVPoints.forEach(p => p.classList.remove('selected'));
                     }
                 }, 800);
             });
         }
+        
+        agileVPoints.forEach(point => {
+            point.addEventListener('click', () => {
+                const pointId = point.dataset.point;
+                agileVInfoBox.innerHTML = agileVInfoTexts[pointId];
+                agileVPoints.forEach(p => p.classList.remove('selected'));
+                point.classList.add('selected');
+            });
+        });
 
 
         // --- Demo Animation ---
