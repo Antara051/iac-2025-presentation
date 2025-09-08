@@ -164,6 +164,57 @@
             width: 100%;
             border-top: 3px solid #F59E0B;
         }
+        /* Styles for Specifications Animation */
+        .spec-container {
+            position: relative;
+            width: 1000px;
+            height: 500px;
+        }
+        .spec-center {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 200px;
+            height: 200px;
+            border-radius: 50%;
+            background-color: #1F2937;
+            border: 4px solid #F3F4F6;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            font-size: 1.5rem;
+            font-weight: bold;
+            opacity: 0;
+            transition: opacity 0.5s ease;
+        }
+        .spec-point {
+            position: absolute;
+            opacity: 0;
+            transition: all 0.5s ease-out;
+            background-color: #1F2937;
+            padding: 0.75rem;
+            border-radius: 0.5rem;
+            width: 280px;
+        }
+        .spec-point ul {
+            list-style-type: disc;
+            list-style-position: inside;
+            font-size: 0.9rem;
+            color: #D1D5DB;
+            padding-left: 0.5rem;
+        }
+        .spec-point h4 { font-weight: bold; }
+        .spec-point.visible {
+            opacity: 1;
+        }
+        #spec-1 { top: 0; left: 0; border-left: 4px solid #2DD4BF; }
+        #spec-2 { top: 130px; left: 0; border-left: 4px solid #A78BFA; }
+        #spec-3 { top: 260px; left: 0; border-left: 4px solid #FBBF24; }
+        #spec-4 { top: 0; right: 0; border-left: 4px solid #60A5FA; }
+        #spec-5 { top: 130px; right: 0; border-left: 4px solid #F472B6; }
+        #spec-6 { top: 260px; right: 0; border-left: 4px solid #FB923C; }
     </style>
 </head>
 <body>
@@ -221,13 +272,61 @@
                     </ul>
                 </div>
                 <div class="fade-in">
-                    <img src="https://placehold.co/600x400/374151/ffffff?text=Ground+Station+Concept" alt="Ground Station Control Room" class="rounded-lg shadow-2xl">
+                    <img src="https://antara051.github.io/iac-2025-presentation/Images/GS_operate.JPG" alt="Ground Station Control Room" class="rounded-lg shadow-2xl">
                     <p class="text-center mt-2 text-gray-400 italic">The software is the critical bridge between operators and the satellite.</p>
                 </div>
             </div>
         </section>
+
+        <!-- Slide 4: Specifications -->
+        <section id="specifications" class="section">
+            <div class="slide-content text-center flex flex-col items-center">
+                <h2 class="text-4xl font-bold text-amber-400 mb-2">GS Software Specifications</h2>
+                <p class="text-lg text-gray-300 mb-8 max-w-4xl">We defined six core specifications to guide the development of a robust and mission-ready ground station software.</p>
+                <div class="spec-container">
+                    <div class="spec-center" id="spec-hub">GS Software<br>Specifications</div>
+                    <div class="spec-point" id="spec-1">
+                        <h4>01. Communication & Data Handling</h4>
+                        <ul>
+                            <li>Supports S-Band communication via S-GSE</li>
+                            <li>COM Port (Serial) & Ethernet connectivity</li>
+                        </ul>
+                    </div>
+                    <div class="spec-point" id="spec-2">
+                        <h4>02. Telemetry & Command Execution</h4>
+                        <ul>
+                            <li>Real-time telemetry reception</li>
+                            <li>Scheduled/manual command execution</li>
+                            <li>CSV-based uplink</li>
+                        </ul>
+                    </div>
+                    <div class="spec-point" id="spec-3">
+                        <h4>03. User Interface & Data Visualization</h4>
+                        <ul>
+                            <li>Interactive GUI Design</li>
+                            <li>Live Monitoring Dashboard</li>
+                        </ul>
+                    </div>
+                    <div class="spec-point" id="spec-4">
+                        <h4>04. System Compatibility & Reliability</h4>
+                        <ul>
+                            <li>Compatible with Windows</li>
+                            <li>Integrates with additional software</li>
+                            <li>Operation History Logging</li>
+                        </ul>
+                    </div>
+                     <div class="spec-point" id="spec-5">
+                        <h4>05. Integration & Expandability</h4>
+                        <ul>
+                           <li>Modular architecture for future expansions</li>
+                        </ul>
+                    </div>
+                </div>
+                <button id="run-spec-animation" class="gemini-button mt-6">Start Animation</button>
+            </div>
+        </section>
         
-        <!-- Slide 4: System Architecture -->
+        <!-- Slide 5: System Architecture -->
         <section id="architecture" class="section">
             <div class="slide-content text-center">
                  <h2 class="text-4xl font-bold text-amber-400 mb-2">Our Blueprint: A Layered Architecture</h2>
@@ -250,7 +349,7 @@
             </div>
         </section>
 
-        <!-- Slide 5: Agile-V Model -->
+        <!-- Slide 6: Agile-V Model -->
         <section id="agile-v-model" class="section">
             <div class="slide-content text-center flex flex-col items-center">
                 <h2 class="text-4xl font-bold text-amber-400 mb-2">Our Process: The Agile-V Model</h2>
@@ -298,7 +397,7 @@
             </div>
         </section>
 
-        <!-- Slide 6: Live Demo Simulation -->
+        <!-- Slide 7: Live Demo Simulation -->
         <section id="demo" class="section">
             <div class="slide-content text-center">
                 <h2 class="text-4xl font-bold text-amber-400 mb-8">Live Demo Simulation</h2>
@@ -312,7 +411,7 @@
             </div>
         </section>
 
-        <!-- Slide 7: The Proof -->
+        <!-- Slide 8: The Proof -->
         <section id="results" class="section">
             <div class="slide-content text-center">
                 <h2 class="text-4xl font-bold text-amber-400 mb-8">The Proof: Mission Ready Performance</h2>
@@ -333,7 +432,7 @@
             </div>
         </section>
         
-        <!-- Slide 8: Conclusion -->
+        <!-- Slide 9: Conclusion -->
         <section id="conclusion" class="section">
             <div class="slide-content grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
                  <div class="fade-in">
@@ -390,6 +489,34 @@
                 });
             });
         });
+
+        // --- Specifications Animation ---
+        const specButton = document.getElementById('run-spec-animation');
+        if (specButton) {
+            specButton.addEventListener('click', () => {
+                specButton.disabled = true;
+                specButton.textContent = 'Animating...';
+                
+                const hub = document.getElementById('spec-hub');
+                const points = document.querySelectorAll('.spec-point');
+                
+                hub.classList.remove('visible');
+                points.forEach(p => p.classList.remove('visible'));
+
+                setTimeout(() => {
+                    hub.style.opacity = '1';
+                    let delay = 300;
+                    points.forEach(p => {
+                        setTimeout(() => p.classList.add('visible'), delay);
+                        delay += 300;
+                    });
+                    setTimeout(() => {
+                        specButton.disabled = false;
+                        specButton.textContent = 'Replay Animation';
+                    }, delay);
+                }, 100);
+            });
+        }
         
         // --- Agile-V Model Animation ---
         const agileVButton = document.getElementById('run-agile-v-animation');
