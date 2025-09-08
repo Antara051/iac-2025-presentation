@@ -142,8 +142,8 @@
                     <p class="text-lg text-gray-300 mb-4">The <strong class="text-white">V</strong>isible <strong class="text-white">E</strong>xtragalactic background <strong class="text-white">R</strong>adia<strong class="text-white">T</strong>ion <strong class="text-white">E</strong>xploration by <strong class="text-white">C</strong>ube<strong class="text-white">S</strong>at is a 6U nanosatellite with a critical scientific goal: to measure the Extragalactic Background Light (EBL) and unlock secrets of galaxy evolution.</p>
                     <p class="text-lg text-gray-300">Developed by a consortium led by Kyushu Institute of Technology, this ambitious JAXA-SMASH mission requires flawless ground support for continuous monitoring and safe command execution.</p>
                     <div class="mt-6">
-                        <img src="https://i.imgur.com/B10m8X9.png" alt="Fully assembled VERTECS Flight Model" class="rounded-lg shadow-xl w-full">
-                         <p class="text-center mt-2 text-sm text-gray-400 italic">The VERTECS Flight Model during integration.</p>
+                        <img src="https://antara051.github.io/iac-2025-presentation/Images/Vertecs12.jpg" alt="Fully assembled VERTECS Flight Model" class="rounded-lg shadow-xl w-full">
+                         <p class="text-center mt-2 text-sm text-gray-400 italic">The VERTECS Flight Model.</p>
                     </div>
                 </div>
                 <div class="fade-in">
@@ -223,7 +223,7 @@
                 <div class="gemini-feature-box text-left max-w-3xl mx-auto">
                     <h3 class="text-2xl font-bold text-amber-400 mb-4 text-center">✨ AI-Assisted Operations</h3>
                     <div class="text-center">
-                        <p class="text-gray-300 mb-4">Click to simulate a satellite anomaly and have Gemini generate a professional operator report.</p>
+                        <p class="text-gray-300 mb-4">Click to simulate a satellite anomaly and have  generate a professional operator report.</p>
                         <button id="generate-anomaly-report" class="gemini-button">Simulate & Report Anomaly</button>
                     </div>
                     <div id="anomaly-report-output" class="gemini-output mt-4 text-gray-300"></div>
@@ -253,7 +253,7 @@
                     <div class="gemini-feature-box text-left">
                          <h3 class="text-2xl font-bold text-amber-400 mb-4 text-center">✨ AI-Powered Future Vision</h3>
                         <div class="text-center">
-                            <p class="text-gray-300 mb-4">Let Gemini brainstorm more innovative features for the next version of our software.</p>
+                            <p class="text-gray-300 mb-4">Let brainstorm more innovative features for the next version of our software.</p>
                             <button id="generate-future-features" class="gemini-button">Generate Future Features</button>
                         </div>
                         <div id="future-features-output" class="gemini-output mt-4 text-gray-300"></div>
@@ -314,7 +314,8 @@
 
         // --- Gemini API Integration ---
         const apiKey = ""; // API key is handled by the environment
-        const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-05-20:generateContent?key=${apiKey}`;
+        // **FIX**: Switched to the gemini-pro model for better compatibility.
+        const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-pro:generateContent?key=${apiKey}`;
 
         async function callGeminiAPI(prompt, outputElement, buttonElement) {
             buttonElement.disabled = true;
@@ -324,34 +325,41 @@
                 contents: [{ parts: [{ text: prompt }] }],
             };
             
-            let response;
             try {
-                 response = await fetch(apiUrl, {
+                 const response = await fetch(apiUrl, {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify(payload)
                 });
 
                 if (!response.ok) {
-                    throw new Error(`API call failed with status: ${response.status}`);
+                    const errorBody = await response.json().catch(() => ({ error: { message: "An unknown API error occurred." } }));
+                    throw new Error(errorBody?.error?.message || `API error: ${response.status}`);
                 }
 
                 const result = await response.json();
                 const text = result.candidates?.[0]?.content?.parts?.[0]?.text;
                 
                 if (text) {
-                    // Simple markdown to HTML for lists
-                    let html = text.replace(/\n/g, '<br>');
-                    html = html.replace(/\* (.*?)(<br>|$)/g, '<li>$1</li>');
-                    html = html.replace(/(<li>.*<\/li>)/g, '<ul>$1</ul>');
+                    let html = text
+                        .replace(/</g, "&lt;")
+                        .replace(/>/g, "&gt;")
+                        .replace(/\n/g, '<br>')
+                        .replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')
+                        .replace(/\* (.*?)(<br>|$)/g, '<li>$1</li>');
+                    
+                    if(html.includes('<li>')) {
+                       html = `<ul>${html.replace(/<\/li><br>/g, '</li>')}</ul>`;
+                    }
                     outputElement.innerHTML = html;
+
                 } else {
-                    outputElement.textContent = 'Sorry, could not generate a response.';
+                    outputElement.textContent = 'Sorry, the model did not return a response.';
                 }
 
             } catch (error) {
-                console.error("Gemini API call failed:", error);
-                outputElement.textContent = 'An error occurred. Please try again later.';
+                console.error(" API call failed:", error);
+                outputElement.textContent = `An error occurred. Please try again later. Details: ${error.message}`;
             } finally {
                 buttonElement.disabled = false;
             }
@@ -381,7 +389,7 @@
                 const prompt = `
                     Based on the description of the VERTECS Ground Station Software (a tool for command uplink, telemetry decoding, and visualization for a 6U CubeSat), suggest three innovative new features that could be added in the future.
                     The software already has a layered architecture, a PyQt GUI, and robust logging.
-                    Present the suggestions as a bulleted list with a brief explanation for each.
+                    Present the suggestions as a bulleted list with a brief explanation for each. Use markdown for bolding and bullet points.
                 `;
                 callGeminiAPI(prompt, futureOutput, futureBtn);
             });
