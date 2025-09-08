@@ -26,10 +26,7 @@
             flex-direction: column;
             justify-content: center;
             align-items: center;
-            padding: 4rem 2rem;
-            position: absolute;
-            top: 0;
-            left: 0;
+            padding: 2rem 1rem;
         }
         .section.active {
             display: flex; /* Only the active section is shown */
@@ -118,6 +115,50 @@
             0% { transform: rotate(0deg); }
             100% { transform: rotate(360deg); }
         }
+        /* Styles for Agile-V Animation */
+        .agile-v-container {
+            display: grid;
+            grid-template-columns: 1fr auto 1fr;
+            gap: 1.5rem;
+            align-items: center;
+            margin-top: 2rem;
+            width: 100%;
+            max-width: 900px;
+        }
+        .agile-side, .v-model-side {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+        .av-point {
+            background-color: #1F2937;
+            border-radius: 0.5rem;
+            padding: 1rem;
+            text-align: left;
+            opacity: 0;
+            transform: scale(0.9);
+            transition: all 0.5s ease-out;
+            border-left: 4px solid;
+        }
+        .av-point.visible {
+            opacity: 1;
+            transform: scale(1);
+        }
+        .agile-side .av-point { border-color: #34D399; }
+        .v-model-side .av-point { border-color: #60A5FA; }
+        .av-center {
+            text-align: center;
+        }
+        .av-info-box {
+            margin-top: 1.5rem;
+            background-color: #1F2937;
+            padding: 1.5rem;
+            border-radius: 0.75rem;
+            min-height: 120px;
+            max-width: 900px;
+            width: 100%;
+            border-top: 3px solid #F59E0B;
+        }
     </style>
 </head>
 <body>
@@ -186,7 +227,7 @@
             <div class="slide-content text-center">
                  <h2 class="text-4xl font-bold text-amber-400 mb-2">Our Blueprint: A Layered Architecture</h2>
                  <p class="text-lg text-gray-300 mb-8">We designed the software with 5 independent layers for modularity and reliability. Click each layer to learn more.</p>
-                 <div class="grid grid-cols-5 gap-4 interactive-diagram" id="architecture-diagram">
+                 <div class="grid grid-cols-1 md:grid-cols-5 gap-4 interactive-diagram" id="architecture-diagram">
                      <div class="part bg-gray-800 p-6 rounded-lg" data-target="info-connection"><h3 class="font-bold text-lg">Connection Layer</h3><p class="text-sm text-gray-400">The Bridge</p></div>
                      <div class="part bg-gray-800 p-6 rounded-lg" data-target="info-uplink"><h3 class="font-bold text-lg">Uplink Layer</h3><p class="text-sm text-gray-400">Sending Commands</p></div>
                      <div class="part bg-gray-800 p-6 rounded-lg" data-target="info-downlink"><h3 class="font-bold text-lg">Downlink Layer</h3><p class="text-sm text-gray-400">Processing Telemetry</p></div>
@@ -194,7 +235,7 @@
                      <div class="part bg-gray-800 p-6 rounded-lg" data-target="info-persistence"><h3 class="font-bold text-lg">Persistence Layer</h3><p class="text-sm text-gray-400">Data Logging</p></div>
                  </div>
                  <div class="mt-8 text-left bg-gray-800 p-6 rounded-lg min-h-[150px]">
-                     <div id="info-default" class="info-box active"><h4 class="font-bold text-xl text-amber-400">How it's Built</h4><p class="text-gray-300 mt-2">The development followed a hybrid <strong class="text-white">Agile-V Model</strong>, combining the flexibility of Agile with the rigorous verification of the traditional V-Model—perfect for academic nanosatellite projects.</p></div>
+                     <div id="info-default" class="info-box active"><h4 class="font-bold text-xl text-amber-400">Click a Layer</h4><p class="text-gray-300 mt-2">Explore each component of the ground station software architecture.</p></div>
                      <div id="info-connection" class="info-box"><h4 class="font-bold text-xl text-amber-400">Connection Layer</h4><p class="text-gray-300 mt-2">Manages the raw data link between the satellite and the ground station, ensuring reliable communication over the S-band connection.</p></div>
                      <div id="info-uplink" class="info-box"><h4 class="font-bold text-xl text-amber-400">Uplink Layer</h4><p class="text-gray-300 mt-2">Formats operator commands into mission-compliant packets, adding timestamps and redundancy checks to ensure every command is traceable and verifiable.</p></div>
                     <div id="info-downlink" class="info-box"><h4 class="font-bold text-xl text-amber-400">Downlink Layer</h4><p class="text-gray-300 mt-2">Extracts, filters, and reconstructs housekeeping data from the raw telemetry stream, preparing it for real-time analysis.</p></div>
@@ -204,7 +245,55 @@
             </div>
         </section>
 
-        <!-- Slide 5: Live Demo Simulation -->
+        <!-- Slide 5: Agile-V Model -->
+        <section id="agile-v-model" class="section">
+            <div class="slide-content text-center flex flex-col items-center">
+                <h2 class="text-4xl font-bold text-amber-400 mb-2">Our Process: The Agile-V Model</h2>
+                <p class="text-lg text-gray-300 mb-8 max-w-4xl">We combined Agile's flexibility for rapid iteration with the V-Model's rigor for mission-critical verification. This hybrid approach ensures both adaptability and reliability.</p>
+                
+                <div class="agile-v-container">
+                    <div class="agile-side">
+                        <div class="av-point" data-point="1">
+                            <h4 class="font-bold text-white">1. Early Prototype Testing</h4>
+                            <p class="text-sm text-gray-400">Rapid development and testing with EM hardware.</p>
+                        </div>
+                        <div class="av-point" data-point="2">
+                            <h4 class="font-bold text-white">2. Iterative Refinement</h4>
+                            <p class="text-sm text-gray-400">Incorporating operator feedback in fast cycles.</p>
+                        </div>
+                        <div class="av-point" data-point="3">
+                             <h4 class="font-bold text-white">3. Operator-Centric Design</h4>
+                            <p class="text-sm text-gray-400">Focus on usability and clear data presentation.</p>
+                        </div>
+                    </div>
+                    <div class="av-center">
+                         <img src="https://placehold.co/150x150/111827/F59E0B?text=AGILE-V" alt="Agile-V" class="rounded-full">
+                    </div>
+                    <div class="v-model-side">
+                        <div class="av-point" data-point="4">
+                            <h4 class="font-bold text-white">4. Traceability of Requirements</h4>
+                            <p class="text-sm text-gray-400">Each requirement mapped to a validation activity.</p>
+                        </div>
+                        <div class="av-point" data-point="5">
+                            <h4 class="font-bold text-white">5. Validation-Oriented</h4>
+                            <p class="text-sm text-gray-400">Features developed with formal validation in mind.</p>
+                        </div>
+                         <div class="av-point" data-point="6">
+                            <h4 class="font-bold text-white">6. Integration with Flight Model</h4>
+                            <p class="text-sm text-gray-400">Ensuring a seamless transition from EM to FM.</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="av-info-box" id="agile-v-info-box">
+                    <p class="text-gray-300">Click "Start Animation" to see how our hybrid process works.</p>
+                </div>
+                
+                <button id="run-agile-v-animation" class="gemini-button mt-6">Start Animation</button>
+            </div>
+        </section>
+
+        <!-- Slide 6: Live Demo Simulation -->
         <section id="demo" class="section">
             <div class="slide-content text-center">
                 <h2 class="text-4xl font-bold text-amber-400 mb-8">Live Demo Simulation</h2>
@@ -218,7 +307,7 @@
             </div>
         </section>
 
-        <!-- Slide 6: The Proof -->
+        <!-- Slide 7: The Proof -->
         <section id="results" class="section">
             <div class="slide-content text-center">
                 <h2 class="text-4xl font-bold text-amber-400 mb-8">The Proof: Mission Ready Performance</h2>
@@ -239,7 +328,7 @@
             </div>
         </section>
         
-        <!-- Slide 7: Conclusion -->
+        <!-- Slide 8: Conclusion -->
         <section id="conclusion" class="section">
             <div class="slide-content grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
                  <div class="fade-in">
@@ -296,6 +385,44 @@
                 });
             });
         });
+        
+        // --- Agile-V Model Animation ---
+        const agileVButton = document.getElementById('run-agile-v-animation');
+        const agileVInfoBox = document.getElementById('agile-v-info-box');
+        const agileVPoints = document.querySelectorAll('.av-point');
+        
+        const agileVInfoTexts = {
+            1: "<strong>From the Agile perspective:</strong> Development was organized into short iterations on specific features. Early prototypes were tested directly with Engineering Model (EM) hardware.",
+            2: "Rapid feedback loops with operators and hardware allowed for quick refinement of user-facing components, like the command transmitter and telemetry decoders.",
+            3: "This iterative cycle reduces the risk of late usability issues by focusing on a clear, operator-friendly interface from the beginning.",
+            4: "<strong>From the V-Model perspective:</strong> Each requirement, no matter how small, was mapped to a corresponding validation activity, ensuring complete traceability.",
+            5: "For example, the requirement for low latency was tied to Long Duration Testing, while command reliability was verified through repeated uplink trials.",
+            6: "This rigorous approach ensured that despite the flexible coding process, all mission-critical requirements were formally validated before integration with the Flight Model (FM)."
+        };
+
+        if(agileVButton) {
+            agileVButton.addEventListener('click', () => {
+                agileVButton.disabled = true;
+                agileVButton.textContent = 'Animating...';
+                agileVPoints.forEach(p => p.classList.remove('visible'));
+
+                let i = 0;
+                const pointsOrder = [1, 4, 2, 5, 3, 6]; // Alternate between Agile and V-Model
+                const interval = setInterval(() => {
+                    if (i < pointsOrder.length) {
+                        const point = document.querySelector(`.av-point[data-point="${pointsOrder[i]}"]`);
+                        point.classList.add('visible');
+                        agileVInfoBox.innerHTML = agileVInfoTexts[pointsOrder[i]];
+                        i++;
+                    } else {
+                        clearInterval(interval);
+                        agileVButton.disabled = false;
+                        agileVButton.textContent = 'Replay Animation';
+                    }
+                }, 800);
+            });
+        }
+
 
         // --- Demo Animation ---
         const runDemoBtn = document.getElementById('run-demo-btn');
@@ -356,7 +483,7 @@
                         .replace(/\* (.*?)(<br>|$)/g, '<li>$1</li>');
                     
                     if(html.includes('<li>')) {
-                       html = `<ul>${html.replace(/<\/li><br>/g, '</li>')}</ul>`;
+                       html = `<ul>${html.replaceAll('</li><br>', '</li>')}</ul>`;
                     }
                     outputElement.innerHTML = html;
 
