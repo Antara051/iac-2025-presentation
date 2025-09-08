@@ -184,6 +184,48 @@
         #spec-4 { top: 20px; right: 0; border-color: #60A5FA; }
         #spec-5 { top: 180px; right: 0; border-color: #F472B6; }
         #spec-6 { top: 340px; right: 0; border-color: #FB923C; }
+        
+        /* Styles for Interactive Results */
+        .metric-button {
+            width: 100%;
+            background-color: #1F2937;
+            border: 1px solid #374151;
+            color: #D1D5DB;
+            padding: 0.75rem;
+            border-radius: 0.5rem;
+            text-align: left;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+        .metric-button:hover {
+            background-color: #374151;
+        }
+        .metric-button.active {
+            background-color: #F59E0B;
+            color: #111827;
+            font-weight: bold;
+            border-color: #F59E0B;
+        }
+        .result-display {
+            background-color: #1F2937;
+            border-radius: 0.75rem;
+            padding: 2rem;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            min-height: 300px;
+        }
+        .result-value {
+            opacity: 0;
+            transform: translateY(10px);
+            transition: all 0.4s ease;
+        }
+        .result-value.visible {
+             opacity: 1;
+            transform: translateY(0);
+        }
     </style>
 </head>
 <body>
@@ -244,7 +286,8 @@
         <section id="specifications" class="section">
             <div class="slide-content text-center flex flex-col items-center">
                 <h2 class="text-4xl font-bold text-amber-400 mb-2">GS Software Specifications</h2>
-                <p class="text-lg text-gray-300 mb-8 max-w-4xl">We defined six core specifications to guide the development of a robust and mission-ready ground station software.</p>
+                <p class="text-lg text-gray-300">We defined six core specifications to guide the development of a robust and mission-ready ground station software.</p>
+                <button id="run-spec-animation" class="gemini-button my-6">Start Animation</button>
                 <div class="spec-container">
                     <div class="spec-center" id="spec-hub">GS Software<br>Specifications</div>
                     <div class="spec-point" id="spec-1">
@@ -289,7 +332,6 @@
                         </ul>
                     </div>
                 </div>
-                <button id="run-spec-animation" class="gemini-button mt-6">Start Animation</button>
             </div>
         </section>
         
@@ -320,8 +362,8 @@
         <section id="agile-v-model" class="section">
             <div class="slide-content text-center flex flex-col items-center">
                 <h2 class="text-4xl font-bold text-amber-400 mb-2">Our Process: The Agile-V Model</h2>
-                <p class="text-lg text-gray-300 mb-8 max-w-4xl">We combined Agile's flexibility for rapid iteration with the V-Model's rigor for mission-critical verification. This hybrid approach ensures both adaptability and reliability.</p>
-                
+                <p class="text-lg text-gray-300">We combined Agile's flexibility for rapid iteration with the V-Model's rigor for mission-critical verification. This hybrid approach ensures both adaptability and reliability.</p>
+                <button id="run-agile-v-animation" class="gemini-button my-6">Start Animation</button>
                 <div class="agile-v-container">
                     <div class="agile-side">
                         <div class="av-point" data-point="1">
@@ -359,22 +401,20 @@
                 <div class="av-info-box" id="agile-v-info-box">
                     <p class="text-gray-300">Click any point to learn more, or start the animation.</p>
                 </div>
-                
-                <button id="run-agile-v-animation" class="gemini-button mt-6">Start Animation</button>
             </div>
         </section>
 
         <!-- Slide 7: Live Demo Simulation -->
         <section id="demo" class="section">
             <div class="slide-content text-center">
-                <h2 class="text-4xl font-bold text-amber-400 mb-8">Live Demo Simulation</h2>
+                <h2 class="text-4xl font-bold text-amber-400">Live Demo Simulation</h2>
+                <button id="run-demo-btn" class="my-8 bg-amber-500 text-gray-900 font-bold py-3 px-6 rounded-lg hover:bg-amber-400 transition-colors">Run Animation</button>
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
                     <!-- Telemetry Flow -->
                     <div class="bg-gray-800 p-6 rounded-lg"><h3 class="text-2xl font-bold mb-4 text-white">Telemetry Flow: From Raw Data to Insight</h3><div class="space-y-4 font-mono text-sm text-left"><div id="demo-raw" class="bg-gray-900 p-3 rounded opacity-50 transition-opacity duration-500"><p class="text-gray-400">> Raw Hex Stream Received...</p><p class="text-red-400">7E A0 B1 C2 00 FF 3A 9B ...</p></div><div class="text-center text-amber-400 text-2xl">↓</div><div id="demo-decoded" class="bg-gray-900 p-3 rounded opacity-50 transition-opacity duration-500"><p class="text-gray-400">> Packet Decoded...</p><p><span class="text-cyan-400">Voltage:</span> 5.1V</p><p><span class="text-cyan-400">Current:</span> 0.8A</p><p><span class="text-cyan-400">Temp:</span> 23.5°C</p></div><div class="text-center text-amber-400 text-2xl">↓</div><div id="demo-gui" class="bg-gray-900 p-3 rounded opacity-50 transition-opacity duration-500"><p class="text-gray-400">> GUI Updated...</p><p class="text-green-400">Plots & Indicators now show live data.</p></div></div></div>
                     <!-- Command Flow -->
                     <div class="bg-gray-800 p-6 rounded-lg"><h3 class="text-2xl font-bold mb-4 text-white">Command Flow: Safe & Reliable Control</h3><div class="space-y-4 font-mono text-sm text-left"><div id="demo-cmd-send" class="bg-gray-900 p-3 rounded opacity-50 transition-opacity duration-500"><p class="text-gray-400">> Operator sends command...</p><p class="text-yellow-400">"ACTIVATE_PAYLOAD"</p></div><div class="text-center text-amber-400 text-2xl">↓</div><div id="demo-cmd-uplink" class="bg-gray-900 p-3 rounded opacity-50 transition-opacity duration-500"><p class="text-gray-400">> Transmitted to satellite...</p><p>Uplink successful.</p></div><div class="text-center text-amber-400 text-2xl">↓</div><div id="demo-cmd-ack" class="bg-gray-900 p-3 rounded opacity-50 transition-opacity duration-500"><p class="text-gray-400">> Acknowledgement received...</p><p class="text-green-400">Command "ACTIVATE_PAYLOAD" confirmed.</p></div></div></div>
                 </div>
-                 <button id="run-demo-btn" class="mt-8 bg-amber-500 text-gray-900 font-bold py-3 px-6 rounded-lg hover:bg-amber-400 transition-colors">Run Animation</button>
             </div>
         </section>
 
@@ -382,10 +422,69 @@
         <section id="results" class="section">
             <div class="slide-content text-center">
                 <h2 class="text-4xl font-bold text-amber-400 mb-8">The Proof: Mission Ready Performance</h2>
-                <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
-                    <div class="bg-gray-800 p-8 rounded-lg shadow-xl"><p class="text-6xl font-bold text-green-400">&gt;99%</p><h3 class="mt-4 text-xl font-semibold text-white">Command Acknowledgement</h3><p class="mt-2 text-gray-400">Commands were consistently received and confirmed by the satellite across all tests.</p></div>
-                    <div class="bg-gray-800 p-8 rounded-lg shadow-xl"><p class="text-6xl font-bold text-green-400">&lt;1 sec</p><h3 class="mt-4 text-xl font-semibold text-white">Telemetry Latency</h3><p class="mt-2 text-gray-400">Operators see data almost instantly, allowing for rapid, informed decision-making.</p></div>
-                    <div class="bg-gray-800 p-8 rounded-lg shadow-xl"><p class="text-6xl font-bold text-green-400">Zero</p><h3 class="mt-4 text-xl font-semibold text-white">Crashes or Data Gaps</h3><p class="mt-2 text-gray-400">The system demonstrated complete stability with no crashes or data loss during multi-hour long duration tests.</p></div>
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-8 items-start">
+                    <!-- Metrics List -->
+                    <div class="md:col-span-1 space-y-2" id="metrics-container">
+                        <button class="metric-button active" data-metric="ack">Command acknowledgement rate</button>
+                        <button class="metric-button" data-metric="pacing">Command pacing accuracy</button>
+                        <button class="metric-button" data-metric="latency">Telemetry latency</button>
+                        <button class="metric-button" data-metric="decoding">Telemetry decoding accuracy</button>
+                        <button class="metric-button" data-metric="logging">Logging continuity</button>
+                        <button class="metric-button" data-metric="gui">GUI responsiveness</button>
+                        <button class="metric-button" data-metric="layers">Logging layers validated</button>
+                        <button class="metric-button" data-metric="stability">System stability</button>
+                    </div>
+
+                    <!-- Result Display -->
+                    <div class="md:col-span-2 result-display">
+                        <div id="result-display-content" class="result-value">
+                            <!-- Content will be injected by JS -->
+                        </div>
+                    </div>
+                </div>
+
+                 <!-- Hidden data containers -->
+                <div class="hidden">
+                    <div id="data-ack">
+                        <span class="text-6xl font-bold text-green-400">&gt; 99%</span>
+                        <h3 class="mt-4 text-xl font-semibold text-white">Command Acknowledgement Rate</h3>
+                        <p class="mt-2 text-gray-400">Validated via: EM, FM Functional tests, LDT</p>
+                    </div>
+                    <div id="data-pacing">
+                        <span class="text-6xl font-bold text-green-400">Within 1s</span>
+                        <h3 class="mt-4 text-xl font-semibold text-white">Command Pacing Accuracy</h3>
+                        <p class="mt-2 text-gray-400">Validated via: EM CSV sequence</p>
+                    </div>
+                    <div id="data-latency">
+                        <span class="text-6xl font-bold text-green-400">&lt; 1s</span>
+                        <h3 class="mt-4 text-xl font-semibold text-white">Telemetry Latency</h3>
+                        <p class="mt-2 text-gray-400">From packet receipt to GUI update. Validated via: EM and LDT</p>
+                    </div>
+                     <div id="data-decoding">
+                        <span class="text-6xl font-bold text-green-400">Accurate</span>
+                        <h3 class="mt-4 text-xl font-semibold text-white">Telemetry Decoding Accuracy</h3>
+                        <p class="mt-2 text-gray-400">Matched OBC debug line and reference values. Validated via: EM + Thermal Vacuum tests</p>
+                    </div>
+                     <div id="data-logging">
+                        <span class="text-6xl font-bold text-green-400">No Gaps</span>
+                        <h3 class="mt-4 text-xl font-semibold text-white">Logging Continuity</h3>
+                        <p class="mt-2 text-gray-400">No data gaps or corruption over >4 hours. Validated via: LDT</p>
+                    </div>
+                     <div id="data-gui">
+                        <span class="text-6xl font-bold text-green-400">No Lag</span>
+                        <h3 class="mt-4 text-xl font-semibold text-white">GUI Responsiveness</h3>
+                        <p class="mt-2 text-gray-400">No lag or desynchronization observed. Validated via: LDT</p>
+                    </div>
+                    <div id="data-layers">
+                        <span class="text-6xl font-bold text-green-400">Consistent</span>
+                        <h3 class="mt-4 text-xl font-semibold text-white">Logging Layers Validated</h3>
+                        <p class="mt-2 text-gray-400">Raw, HK, CSV, Uplink logs all consistent. Validated via: EM, FM, LDT</p>
+                    </div>
+                     <div id="data-stability">
+                        <span class="text-6xl font-bold text-green-400">Zero Crashes</span>
+                        <h3 class="mt-4 text-xl font-semibold text-white">System Stability</h3>
+                        <p class="mt-2 text-gray-400">No crashes or forced shutdowns observed (> several h). Validated via: LDT</p>
+                    </div>
                 </div>
             </div>
         </section>
@@ -542,6 +641,40 @@
                 }, 700);
             });
         }
+        
+        // --- Interactive Results ---
+        const metricButtons = document.querySelectorAll('.metric-button');
+        const resultDisplayContent = document.getElementById('result-display-content');
+
+        function updateResultDisplay(metric) {
+            const dataContainer = document.getElementById(`data-${metric}`);
+            if (dataContainer && resultDisplayContent) {
+                 // Fade out
+                resultDisplayContent.classList.remove('visible');
+                
+                setTimeout(() => {
+                    resultDisplayContent.innerHTML = dataContainer.innerHTML;
+                    // Fade in
+                    resultDisplayContent.classList.add('visible');
+                }, 200);
+
+                metricButtons.forEach(btn => {
+                    btn.classList.toggle('active', btn.dataset.metric === metric);
+                });
+            }
+        }
+        
+        metricButtons.forEach(button => {
+            button.addEventListener('click', () => {
+                updateResultDisplay(button.dataset.metric);
+            });
+        });
+
+        // Initialize with the first metric
+        updateResultDisplay('ack');
+        if(resultDisplayContent) resultDisplayContent.classList.add('visible');
+
+
     });
 </script>
 
