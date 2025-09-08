@@ -121,13 +121,57 @@
     font-size: 13px;
     font-weight: 500;
   }
+  /* Video Overlay Styles */
+  .video-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.8);
+    display: none; /* Initially hidden */
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+    backdrop-filter: blur(5px);
+  }
+  .video-overlay.show {
+    display: flex;
+  }
+  .video-container {
+    position: relative;
+    width: 80%;
+    max-width: 900px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+  }
+  #simulation-video {
+    width: 100%;
+    border-radius: 12px;
+    display: block;
+  }
+  .close-btn {
+    position: absolute;
+    top: -15px;
+    right: -15px;
+    background: white;
+    color: black;
+    border: none;
+    border-radius: 50%;
+    width: 32px;
+    height: 32px;
+    font-size: 20px;
+    font-weight: bold;
+    cursor: pointer;
+    line-height: 32px;
+    text-align: center;
+  }
   @media(max-width:820px) { .pipeline { grid-template-columns: 1fr 1fr; } }
 </style>
 </head>
 <body>
   <div class="wrap">
     <h1>Command → ACK → Telemetry Simulation</h1>
-    <div class="sub">Click <b>Send Command</b>. Watch each stage light up; the ACK toast confirms safe, traceable commanding.</div>
+    <div class="sub">Click <b>Send Command</b> for the simulation, or <b>Show Uplink Video</b> to see the satellite.</div>
 
     <div class="pipeline" id="pipe">
       <div class="node" data-key="gen"><div class="name">Cmd Gen</div><div class="led"></div><div class="desc">Manual or CSV queue</div></div>
@@ -147,16 +191,30 @@
     <div class="controls">
       <button id="send">Send Command</button>
       <button class="secondary" id="reset">Reset</button>
+      <button class="secondary" id="play-video">Show Uplink Video</button>
     </div>
   </div>
 
   <div class="toast" id="toast">✅ ACK received — command executed</div>
+
+  <!-- Video Overlay -->
+  <div id="video-overlay" class="video-overlay">
+    <div class="video-container">
+      <button id="close-video" class="close-btn">&times;</button>
+      <video id="simulation-video" src="https://antara051.github.io/iac-2025-presentation/Images/fm_tcp _short.mp4" controls></video>
+    </div>
+  </div>
 
 <script>
   const nodes = ["gen", "pace", "uplink", "ack", "hk"];
   const $ = sel => document.querySelector(sel);
   const byKey = k => document.querySelector(`.node[data-key="${k}"]`);
   
+  const videoOverlay = $("#video-overlay");
+  const video = $("#simulation-video");
+  const closeVideoBtn = $("#close-video");
+  const playVideoBtn = $("#play-video");
+
   function clear() { 
     nodes.forEach(k => byKey(k).classList.remove('ok')); 
     $("#toast").classList.remove('show'); 
@@ -185,6 +243,17 @@
   
   $("#send").addEventListener('click', play);
   $("#reset").addEventListener('click', clear);
+  
+  playVideoBtn.addEventListener('click', () => {
+    videoOverlay.classList.add('show');
+    video.currentTime = 0;
+    video.play();
+  });
+  
+  closeVideoBtn.addEventListener('click', () => {
+    videoOverlay.classList.remove('show');
+    video.pause();
+  });
 </script>
 </body>
 </html>
