@@ -143,13 +143,21 @@
                     <p class="text-lg text-gray-300">Developed by a consortium led by Kyushu Institute of Technology, this ambitious JAXA-SMASH mission requires flawless ground support for continuous monitoring and safe command execution.</p>
                     <div class="mt-6">
                         <img src="https://antara051.github.io/iac-2025-presentation/Images/Vertecs12.jpg" alt="Fully assembled VERTECS Flight Model" class="rounded-lg shadow-xl w-full">
-                         <p class="text-center mt-2 text-sm text-gray-400 italic">The VERTECS Flight Model.</p>
+                         <p class="text-center mt-2 text-sm text-gray-400 italic">The VERTECS Flight Model during integration.</p>
                     </div>
                 </div>
-                <div class="fade-in">
-                    <h3 class="text-2xl font-semibold text-center mb-4">Explore the 6U CubeSat Form Factor</h3>
-                    <iframe title="6U Cubesat" frameborder="0" allowfullscreen mozallowfullscreen="true" webkitallowfullscreen="true" allow="autoplay; fullscreen; xr-spatial-tracking" xr-spatial-tracking execution-while-out-of-viewport execution-while-not-rendered web-share src="https://sketchfab.com/models/b3b355938891486994a5749f76a591e1/embed?autospin=1&autostart=1&ui_theme=dark" class="three-d-model"></iframe>
-                    <p class="text-center mt-2 text-sm text-gray-400">An interactive model of a standard 6U CubeSat. Credit: ESA/Hubble.</p>
+                <div class="fade-in text-center">
+                    <h3 class="text-2xl font-semibold mb-4">Explore the VERTECS Subsystem Stack</h3>
+                    <div class="sketchfab-embed-wrapper">
+                        <iframe title="Subsystem stak_EM v1" frameborder="0" allowfullscreen mozallowfullscreen="true" webkitallowfullscreen="true" allow="autoplay; fullscreen; xr-spatial-tracking" xr-spatial-tracking execution-while-out-of-viewport execution-while-not-rendered web-share src="https://sketchfab.com/models/8560a5c3ae4f457089a95aae1bf5111b/embed?autospin=1&autostart=1&ui_theme=dark" class="three-d-model"> </iframe>
+                        <p style="font-size: 13px; font-weight: normal; margin: 5px; color: #9CA3AF;">
+                            <a href="https://sketchfab.com/3d-models/subsystem-stak-em-v1-8560a5c3ae4f457089a95aae1bf5111b?utm_medium=embed&utm_campaign=share-popup&utm_content=8560a5c3ae4f457089a95aae1bf5111b" target="_blank" rel="nofollow" style="font-weight: bold; color: #D1D5DB;"> Subsystem stak_EM v1 </a>
+                            by
+                            <a href="https://sketchfab.com/kafi2911?utm_medium=embed&utm_campaign=share-popup&utm_content=8560a5c3ae4f457089a95aae1bf5111b" target="_blank" rel="nofollow" style="font-weight: bold; color: #D1D5DB;"> kafi2911 </a>
+                            on
+                            <a href="https://sketchfab.com?utm_medium=embed&utm_campaign=share-popup&utm_content=8560a5c3ae4f457089a95aae1bf5111b" target="_blank" rel="nofollow" style="font-weight: bold; color: #D1D5DB;">Sketchfab</a>
+                        </p>
+                    </div>
                 </div>
             </div>
         </section>
@@ -223,7 +231,7 @@
                 <div class="gemini-feature-box text-left max-w-3xl mx-auto">
                     <h3 class="text-2xl font-bold text-amber-400 mb-4 text-center">✨ AI-Assisted Operations</h3>
                     <div class="text-center">
-                        <p class="text-gray-300 mb-4">Click to simulate a satellite anomaly and have  generate a professional operator report.</p>
+                        <p class="text-gray-300 mb-4">Click to simulate a satellite anomaly and generate a professional operator report.</p>
                         <button id="generate-anomaly-report" class="gemini-button">Simulate & Report Anomaly</button>
                     </div>
                     <div id="anomaly-report-output" class="gemini-output mt-4 text-gray-300"></div>
@@ -253,7 +261,7 @@
                     <div class="gemini-feature-box text-left">
                          <h3 class="text-2xl font-bold text-amber-400 mb-4 text-center">✨ AI-Powered Future Vision</h3>
                         <div class="text-center">
-                            <p class="text-gray-300 mb-4">Let brainstorm more innovative features for the next version of our software.</p>
+                            <p class="text-gray-300 mb-4">Lets brainstorm more innovative features for the next version of our software.</p>
                             <button id="generate-future-features" class="gemini-button">Generate Future Features</button>
                         </div>
                         <div id="future-features-output" class="gemini-output mt-4 text-gray-300"></div>
@@ -314,7 +322,6 @@
 
         // --- Gemini API Integration ---
         const apiKey = ""; // API key is handled by the environment
-        // **FIX**: Switched to the gemini-pro model for better compatibility.
         const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-pro:generateContent?key=${apiKey}`;
 
         async function callGeminiAPI(prompt, outputElement, buttonElement) {
@@ -358,7 +365,7 @@
                 }
 
             } catch (error) {
-                console.error(" API call failed:", error);
+                console.error("Gemini API call failed:", error);
                 outputElement.textContent = `An error occurred. Please try again later. Details: ${error.message}`;
             } finally {
                 buttonElement.disabled = false;
